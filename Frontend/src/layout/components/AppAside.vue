@@ -16,9 +16,9 @@
               <el-icon><Search /></el-icon>
               <span>纪念币查询</span>
             </template>
-              <el-menu-item index="1-1">普通纪念币</el-menu-item>
-              <el-menu-item index="1-2">贵金属纪念币</el-menu-item>
-              <el-menu-item index="1-3">纪念钞</el-menu-item>
+              <el-menu-item index="/coins/common">普通纪念币</el-menu-item>
+              <el-menu-item index="/coins/precious">贵金属纪念币</el-menu-item>
+              <el-menu-item index="/coins/cash">纪念钞</el-menu-item>
           </el-sub-menu>
           <el-menu-item index="/comments" >
             <el-icon><document /></el-icon>

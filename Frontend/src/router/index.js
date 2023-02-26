@@ -16,9 +16,22 @@ const routes = [
                 }
             },
             {
-                path: '/coins',
-                name: 'coins',
-                component: ()=> import('../views/Coins/index.vue')
+                path: '/coins/common',
+                name: 'commonCoins',
+                component: ()=> import('../views/Coins/index.vue'),
+                props: { type: 'common' }
+            },
+            {
+                path: '/coins/precious',
+                name: 'preciousCoins',
+                component: ()=> import('../views/Coins/index.vue'),
+                props: { type: 'precios' }
+            },
+            {
+                path: '/coins/cash',
+                name: 'cash',
+                component: ()=> import('../views/Coins/index.vue'),
+                props: { type: 'cash' }
             },
             {
                 path: '/comments',
