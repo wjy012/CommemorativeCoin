@@ -19,24 +19,36 @@ const routes = [
                 path: '/coins/common',
                 name: 'commonCoins',
                 component: ()=> import('../views/Coins/index.vue'),
-                props: { type: 'common' }
+                props: { type: 'common' },
+                meta: {
+                    title: '普通纪念币'
+                }
             },
             {
                 path: '/coins/precious',
                 name: 'preciousCoins',
                 component: ()=> import('../views/Coins/index.vue'),
-                props: { type: 'precios' }
+                props: { type: 'precios' },
+                meta: {
+                    title: '贵金属纪念币'
+                }
             },
             {
                 path: '/coins/cash',
                 name: 'cash',
                 component: ()=> import('../views/Coins/index.vue'),
-                props: { type: 'cash' }
+                props: { type: 'cash' },
+                meta: {
+                    title: '纪念钞'
+                }
             },
             {
                 path: '/comments',
                 name: 'comments',
-                component: ()=> import('../views/Comments/index.vue')
+                component: ()=> import('../views/Comments/index.vue'),
+                meta: {
+                    title: '鉴赏文章'
+                }
             }
         ]
     },

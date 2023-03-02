@@ -50,6 +50,7 @@ export default {
   right: 20px;
 }
 .el-main{
-    background-color: cadetblue;
+  padding: 30px;
+  /* background-color: cadetblue; */
 }
 </style>
