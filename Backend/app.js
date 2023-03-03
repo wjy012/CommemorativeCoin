@@ -8,9 +8,11 @@ const cors = require('koa2-cors')
 
 const index = require('./routes/index')
 const users = require('./routes/users')
+const {mysqlConnect} = require('./db/index')
 
 // error handler
 onerror(app)
+mysqlConnect()
 
 // middlewares
 app.use(bodyparser({
