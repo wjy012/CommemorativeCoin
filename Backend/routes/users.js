@@ -1,5 +1,7 @@
 const {
-  login
+  login,
+  reg,
+  verify
 } = require('../controller/users')
 const router = require('koa-router')()
 
@@ -13,6 +15,13 @@ router.get('/bar', function (ctx, next) {
   ctx.body = 'this is a users/bar response'
 })
 
+//登录
 router.post('/login', login)
+
+//注册
+router.post('/reg', reg)
+
+//验证登录
+router.post('/verify', verify)
 
 module.exports = router

@@ -1,83 +1,43 @@
 <template>
     <div class="login-container">
       <el-card class="box-card">
-        <el-form
-          ref="loginFormRef"
-          :model="loginForm"
-          class="login-form"
-          autocomplete="on"
-          label-position="right"
-          label-width="60px"
-          >
-          <div class="title-container">
-            <h3 class="title">系统登录</h3>
-          </div>
-        <el-form-item name="username" label="用户名" prop="username">
-          <el-input name="username" v-model="loginForm.username" />
-        </el-form-item>
-        <el-form-item name="password" label="密码" prop="password">
-          <el-input name="password" v-model="loginForm.password" />
-        </el-form-item>
-        <el-form-item>
-          <el-button @click="goBack()">返回</el-button>
-          <el-button type="primary" @click="submitForm(loginFormRef)">
-            登录
-          </el-button>
-        </el-form-item>
-<!--   
-        <el-form-item
-          prop="username"
-          label="用户名"
-          >
-          <el-input
-            name="username"
-            type="text"
-            tabindex="1"
-            autocomplete="on"
-          />
-        </el-form-item>
-  
-        <el-form-item 
-          prop="password"
-          label="密码"
-        >
-          <el-input
-            name="password"
-            tabindex="2"
-            autocomplete="on"
-          />
-        </el-form-item>
-  
-        <el-button
-          type="primary"
-          @click.prevent="handleLogin"
-        >
-          登录
-        </el-button> -->
-  
-        </el-form>
+        <el-button :icon="ArrowLeft" text @click="goBack()">返回</el-button>
+        <div class="form-area">
+          <el-tabs v-model="activeName" class="demo-tabs" stretch>
+            <el-tab-pane label="登录" name="first">
+              <LoginForm></LoginForm>
+            </el-tab-pane>
+            <el-tab-pane label="注册" name="second">
+              <RegForm></RegForm>
+            </el-tab-pane>
+          </el-tabs>
+        </div>
       </el-card>
-  
+
     </div>
   </template>
 
 <script >
 import { reactive, ref } from 'vue'
 import { useRouter } from 'vue-router'
-
+import {ArrowLeft} from '@element-plus/icons-vue'
+import LoginForm from "./components/LoginForm.vue";
+import RegForm from './components/RegForm.vue';
 
 export default {
+  components: { LoginForm, RegForm},
     setup() {
-        const router = useRouter()
-        const loginFormRef = ref()
-        const loginForm = reactive({
-          username: '',
-          password: '',
-        })
-        const goBack = ()=>{
-            router.back()
-        }
-        return {loginFormRef, loginForm, goBack}
+      const activeName = ref('first')
+      const router = useRouter()
+      const loginFormRef = ref()
+      const loginForm = reactive({
+        username: '',
+        password: '',
+      })
+      const goBack = ()=>{
+          router.back()
+      }
+      return {loginFormRef, loginForm, goBack, activeName, ArrowLeft}
     }
        
 }
@@ -92,12 +52,15 @@ export default {
   align-items: center;
   background-color: lightblue;
   .box-card {
-    width: 350px;
+    width: 400px;
     // position: relative;
-    // max-width: 100%;
-    padding: 30px 50px;
     margin: 0 auto;
     overflow: hidden;
+  }
+  .form-area{
+    // padding: 30px 50px;
+    width: 70%;
+    margin: auto;
   }
   .title-container {
     position: relative;

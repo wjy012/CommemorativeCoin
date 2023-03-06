@@ -5,6 +5,7 @@ const onerror = require('koa-onerror')
 const bodyparser = require('koa-bodyparser')
 const logger = require('koa-logger')
 const cors = require('koa2-cors')
+const koajwt = require('koa-jwt')
 
 const index = require('./routes/index')
 const users = require('./routes/users')
@@ -22,6 +23,12 @@ app.use(json())
 app.use(logger())
 app.use(require('koa-static')(__dirname + '/public'))
 app.use(cors())
+
+app.use(koajwt({
+  secret: 'wjy-graduationdesign-server'
+}).unless({
+  path: [/^\/users\/login/, /^\/users\/reg/]  //不需要jwt验证的接口
+}))
 
 // logger
 app.use(async (ctx, next) => {

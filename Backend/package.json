@@ -15,13 +15,16 @@
     "koa-bodyparser": "^4.2.1",
     "koa-convert": "^1.2.0",
     "koa-json": "^2.0.2",
+    "koa-jwt": "^4.0.4",
     "koa-logger": "^3.2.0",
     "koa-onerror": "^4.1.0",
     "koa-router": "^7.4.0",
     "koa-static": "^5.0.0",
     "koa2-cors": "^2.0.6",
+    "md5": "^2.3.0",
     "mysql2": "^3.1.2",
-    "sequelize": "^6.29.0"
+    "sequelize": "^6.29.0",
+    "uuid": "^9.0.0"
   },
   "devDependencies": {
     "nodemon": "^1.19.1"

@@ -29,9 +29,9 @@
 </template>
 
 <script>
-    export default {
-        name: 'AppAside'    
-    }
+export default {
+    name: 'AppAside'    
+}
 </script>
 
 <style scoped>
