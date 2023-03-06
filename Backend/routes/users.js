@@ -22,6 +22,6 @@ router.post('/login', login)
 router.post('/reg', reg)
 
 //验证登录
-router.post('/verify', verify)
+router.get('/verify', verify)
 
 module.exports = router

@@ -8,6 +8,7 @@ const API = axios.create({
 
 //请求拦截
 API.interceptors.request.use(config => {
+    config.headers.Authorization = localStorage.getItem('token')
     return config
 }, err => {
     console.error('请求失败', err);

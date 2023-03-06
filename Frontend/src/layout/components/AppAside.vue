@@ -24,13 +24,21 @@
             <el-icon><document /></el-icon>
             <span>鉴赏文章查询</span>
           </el-menu-item>
+          <el-menu-item v-if=isLogged index="/system" >
+            <el-icon><setting /></el-icon>
+            <span>系统管理</span>
+          </el-menu-item>
         </el-menu>
     </el-aside>
 </template>
 
 <script>
 export default {
-    name: 'AppAside'    
+  name: 'AppAside',
+  props: ['isLogged'],
+  beforeMount(){
+    // console.log('aside', isLogged);
+  }
 }
 </script>
 

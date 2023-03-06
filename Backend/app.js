@@ -27,7 +27,7 @@ app.use(cors())
 app.use(koajwt({
   secret: 'wjy-graduationdesign-server'
 }).unless({
-  path: [/^\/users\/login/, /^\/users\/reg/]  //不需要jwt验证的接口
+  path: [/^\/users/]  //不需要jwt验证的接口
 }))
 
 // logger

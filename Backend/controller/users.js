@@ -100,9 +100,8 @@ const reg = async ctx =>{
  * 验证用户登录
  */
 const verify = async ctx =>{
-    const token = ctx.header.authorization.replace('Bearer ', '')
-
     try {
+        const token = ctx.header.authorization.replace('Bearer ', '')
         let res = jwt.verify(token, 'wjy-graduationdesign-server')
         await Users.findOne({username: res.username}).then(rel=>{
             if(rel){

@@ -21,22 +21,43 @@
 
 <script>
 import { defineComponent, reactive, ref } from "vue";
+import { ElMessage } from "element-plus";
 import {login} from '../service';
+import { useRouter } from "vue-router";
 export default defineComponent({
-    name: 'LoginForm',
-    setup() {
-        const loginFormRef = ref()
-        const loginForm = reactive({
-          username: '',
-          password: '',
+  name: 'LoginForm',
+  setup() {
+    const router = useRouter()
+    const loginFormRef = ref()
+    const loginForm = reactive({
+      username: '',
+      password: '',
+    })
+    const submitForm = async (form)=>{
+      const {data: res} = await login(form)
+      if(res.code===200){
+        localStorage.setItem('token', 'Bearer '+res.token)
+        ElMessage({
+          message: '登陆成功！三秒后自动跳转首页...',
+          type: 'success'
         })
-        const submitForm = async (form)=>{
-            const {data: res} = await login(form)
-            console.log('res', res);
-        }
-        return {loginFormRef, loginForm, submitForm}
+        setTimeout(() => {
+          router.push('/dashboard')
+        }, 3000);
+      }else if(res.code===404){
+        ElMessage({
+          message: '用户未注册！',
+          type: 'warning'
+        })
+      }else{
+        ElMessage({
+          message: '密码不匹配！',
+          type: 'error'
+        })
+      }
     }
-    
+    return {loginFormRef, loginForm, submitForm}
+  }
 })
 </script>
 
