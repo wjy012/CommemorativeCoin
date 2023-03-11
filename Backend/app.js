@@ -9,6 +9,7 @@ const koajwt = require('koa-jwt')
 
 const index = require('./routes/index')
 const users = require('./routes/users')
+const coins = require('./routes/coins')
 const {mysqlConnect} = require('./db/index')
 
 // error handler
@@ -24,11 +25,11 @@ app.use(logger())
 app.use(require('koa-static')(__dirname + '/public'))
 app.use(cors())
 
-app.use(koajwt({
-  secret: 'wjy-graduationdesign-server'
-}).unless({
-  path: [/^\/users/]  //不需要jwt验证的接口
-}))
+// app.use(koajwt({
+//   secret: 'wjy-graduationdesign-server'
+// }).unless({
+//   path: [/^\/users/]  //不需要jwt验证的接口
+// }))
 
 // logger
 app.use(async (ctx, next) => {
@@ -41,6 +42,7 @@ app.use(async (ctx, next) => {
 // routes
 app.use(index.routes(), index.allowedMethods())
 app.use(users.routes(), users.allowedMethods())
+app.use(coins.routes(), coins.allowedMethods())
 
 // error-handling
 app.on('error', (err, ctx) => {

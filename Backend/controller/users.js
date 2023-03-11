@@ -103,7 +103,10 @@ const verify = async ctx =>{
     try {
         const token = ctx.header.authorization.replace('Bearer ', '')
         let res = jwt.verify(token, 'wjy-graduationdesign-server')
-        await Users.findOne({username: res.username}).then(rel=>{
+        await Users.findOne({
+            where: {username: res.username},
+            attributes: ['username']
+        }).then(rel=>{
             if(rel){
                 ctx.body = {
                     code: 200,
@@ -123,7 +126,6 @@ const verify = async ctx =>{
             }
         })
     } catch (error) {
-        console.log('catch',error);
         ctx.body = {
             code: 500,
             msg: '用户认证失败'

@@ -34,27 +34,3 @@ const Users = sequelize.define('users', {
 // })
 
 module.exports = Users
-
-// module.exports = (sequelize, DataTypes) =>{
-//     class User extends Model {
-
-//     }
-//     User.init({
-//         username: {
-//             type: STRING(20),
-//             primaryKey: true,
-//             allowNull: false,
-//             comment: '用户名'
-//         },
-//         password: {
-//             type: STRING(40),
-//             allowNull: false,
-//             comment: '密码'
-//         },
-//     }, {
-//         sequelize,
-//         tableName: 'user',
-//         underscored: true
-//     });
-//     return User;
-// };

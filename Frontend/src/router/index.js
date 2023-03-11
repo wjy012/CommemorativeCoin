@@ -28,7 +28,7 @@ const routes = [
                 path: '/coins/precious',
                 name: 'preciousCoins',
                 component: ()=> import('../views/Coins/index.vue'),
-                props: { type: 'precios' },
+                props: { type: 'precious' },
                 meta: {
                     title: '贵金属纪念币'
                 }

@@ -1,5 +1,4 @@
 import axios from "axios";
-import { ElStep } from "element-plus";
 
 const API = axios.create({
     baseURL: 'http://localhost:3000',
