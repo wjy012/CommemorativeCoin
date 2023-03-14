@@ -14,15 +14,12 @@
       </el-form-item>
       <el-form-item label="题材">
         <el-select v-model="queryForm.theme" placeholder="选择题材" clearable >
-          <el-option label="生肖贺岁" value="NewYear" />
-          <el-option label="风光" value="Landscape" />
-          <el-option label="动物" value="Animal" />
-          <el-option label="人物" value="Celebrity" />
-          <el-option label="宗教" value="Religion" />
-          <el-option label="体育运动" value="Sports" />
-          <el-option label="传统文化" value="Tradition" />
-          <el-option label="纪念日" value="Anniversary" />
-          <el-option label="其他" value="Other" />
+          <el-option 
+            v-for="item in themeOptions"
+            :key="item.value"
+            :label="item.label"
+            :value="item.value"
+          />
         </el-select>
       </el-form-item>
       <el-form-item label="发行年份">
@@ -45,6 +42,8 @@
 <script>
 import { reactive,  } from 'vue';
 import { Search } from '@element-plus/icons-vue';
+import { themeOptions } from '../../plugins/optionTyping';
+import { it } from 'element-plus/es/locale';
 export default {
   setup(props, {emit}){
     const queryForm = reactive({
@@ -66,7 +65,7 @@ export default {
       queryForm.theme = ''
       queryForm.year = ''
     }
-    return { queryForm, onSubmit, disabledYear, resetForm, Search}
+    return { queryForm, onSubmit, disabledYear, resetForm, Search, themeOptions}
   }
 }
 

@@ -7,7 +7,13 @@
         :prop="item.prop" 
         :label="item.label"
         :width="item.width"
-        />
+        >
+        <template v-if="item.type==='img'" v-slot:default="scope">
+          <div class="imgbox">
+            <el-image :src="scope.row.image" />
+          </div>
+        </template>
+      </el-table-column>
     </el-table>
     <div class="pagediv">
       <el-pagination
@@ -48,7 +54,7 @@ export default defineComponent({
         let tableData = ref([])
 
         const getData = async (pagination, params)=>{
-            const {data: res} = await props.dataRequest(pagination, params)
+            const res = await props.dataRequest(pagination, params)
             if(res.code ===200){
                 tableData.value = res.data.rows
                 count.value = res.data.count
@@ -83,5 +89,9 @@ export default defineComponent({
     display: flex;
     justify-content: right;
     margin-top: 10px;
+}
+.imgbox{
+    width: 70px;
+    height: 70px;
 }
 </style>

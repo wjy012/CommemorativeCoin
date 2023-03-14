@@ -34,7 +34,7 @@ export default defineComponent({
       password: '',
     })
     const submitForm = async (form)=>{
-      const {data: res} = await login(form)
+      const res = await login(form)
       if(res.code===200){
         localStorage.setItem('token', 'Bearer '+res.token)
         ElMessage({

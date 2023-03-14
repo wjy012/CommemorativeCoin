@@ -31,7 +31,7 @@ export default defineComponent({
           password: '',
         })
         const submitForm = async (form)=>{
-            const {data: res} = await reg(form)
+            const res = await reg(form)
             console.log('res', res);
         }
         return { regFormRef, regForm, submitForm}

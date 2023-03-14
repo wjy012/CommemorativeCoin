@@ -43,6 +43,14 @@ const routes = [
                 }
             },
             {
+                path: '/coins/detail/:id',
+                name: 'detail',
+                component: ()=>import('../views/Details/index.vue'),
+                meta: {
+                    title: '详情'
+                }
+            },
+            {
                 path: '/comments',
                 name: 'comments',
                 component: ()=> import('../views/Comments/index.vue'),

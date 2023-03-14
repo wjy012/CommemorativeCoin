@@ -39,7 +39,7 @@ const Coins = sequelize.define('coins', {
         comment: '题材',
     },
     material: {
-        type: STRING(2),
+        type: STRING(10),
         comment: '材质'
     }
 })

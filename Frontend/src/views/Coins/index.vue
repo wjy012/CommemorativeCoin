@@ -26,6 +26,7 @@ export default {
         const columns = [
             {
                 prop: 'image',
+                type: 'img',
                 label: '图案',
                 width: '150'
             }, {
@@ -34,7 +35,7 @@ export default {
                 width: '300'
             }, {
                 prop: 'value',
-                label: '面值',
+                label: '面值(元)',
                 width: '180'
             }, {
                 prop: 'amount',

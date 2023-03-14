@@ -14,7 +14,7 @@ API.interceptors.request.use(config => {
 })
 //响应拦截
 API.interceptors.response.use(res =>{
-    return res
+    return res.data
 }, err =>{
     console.error('响应错误', err);
 })

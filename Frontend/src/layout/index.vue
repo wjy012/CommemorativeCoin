@@ -33,7 +33,7 @@ export default {
     const router = useRouter()
 
     const getLogState = async ()=>{
-      const {data: res} = await verify()
+      const res = await verify()
       if(res.code === 200){
         data.isLogged = true
       }
