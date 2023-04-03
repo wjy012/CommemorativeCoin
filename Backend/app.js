@@ -6,10 +6,14 @@ const bodyparser = require('koa-bodyparser')
 const logger = require('koa-logger')
 const cors = require('koa2-cors')
 const koajwt = require('koa-jwt')
+const KoaStatic = require('koa-static')
+
+const path = require('path')
 
 const index = require('./routes/index')
 const users = require('./routes/users')
 const coins = require('./routes/coins')
+const comments = require('./routes/comments')
 const {mysqlConnect} = require('./db/index')
 
 // error handler
@@ -24,6 +28,7 @@ app.use(json())
 app.use(logger())
 app.use(require('koa-static')(__dirname + '/public'))
 app.use(cors())
+app.use(KoaStatic(path.join(__dirname, './public/uploads')))
 
 // app.use(koajwt({
 //   secret: 'wjy-graduationdesign-server'
@@ -43,6 +48,8 @@ app.use(async (ctx, next) => {
 app.use(index.routes(), index.allowedMethods())
 app.use(users.routes(), users.allowedMethods())
 app.use(coins.routes(), coins.allowedMethods())
+app.use(comments.routes(), comments.allowedMethods())
+
 
 // error-handling
 app.on('error', (err, ctx) => {

@@ -27,3 +27,11 @@ export const getCoinList = async (pagination, query)=>{
         params
     })
 }
+
+export const addCoin = async (data)=>{
+    return await API({
+        url: '/addCoin',
+        method: 'post',
+        data
+    })
+}

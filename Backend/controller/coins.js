@@ -93,6 +93,7 @@ const addCoin = async ctx =>{
 
 /**
  * 删除纪念币信息
+ * get
  */
 const deleteCoin = async ctx=>{
 
@@ -123,10 +124,25 @@ const updateCoin = async ctx=>{
     }
 }
 
+/**
+ * 上传图片接口
+ * post /uploadCoinImg
+ */
+const uploadCoinImg = async ctx =>{
+    let path = ctx.origin + ctx.file.path.replace('public', '')
+    path = path.replace(/\\/g, '/')
+
+    ctx.body = {
+        code: 200,
+        data: path
+    }
+}
+
 module.exports = {
     getCoinList,
     getCoinDetail,
     addCoin,
     deleteCoin,
-    updateCoin
+    updateCoin,
+    uploadCoinImg
 }

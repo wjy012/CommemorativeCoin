@@ -122,7 +122,6 @@ export default {
       }
     }
     const editInfo = ()=>{
-      // coinForm = reactive(coin)
       editing.value = true
     }
     const cancelEdit = () =>{
@@ -140,7 +139,6 @@ export default {
       }
     }
     
-    // console.log('000000', route.params)
     getData(id)
     
     return {coin, editing, coinForm, typeOptions, themeOptions, editInfo, cancelEdit, submitForm}

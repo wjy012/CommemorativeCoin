@@ -5,14 +5,14 @@
       :model="queryForm" 
       class="demo-form-inline"
     >
-      <el-form-item>
+      <el-form-item v-if="kw">
         <el-input 
-            v-model="queryForm.key" 
-            placeholder="输入搜索关键字..." 
-            :prefix-icon="Search"
-            />
+          v-model="queryForm.key" 
+          placeholder="输入搜索关键字..." 
+          :prefix-icon="Search"
+        />
       </el-form-item>
-      <el-form-item label="题材">
+      <el-form-item label="题材" v-if="theme">
         <el-select v-model="queryForm.theme" placeholder="选择题材" clearable >
           <el-option 
             v-for="item in themeOptions"
@@ -22,7 +22,7 @@
           />
         </el-select>
       </el-form-item>
-      <el-form-item label="发行年份">
+      <el-form-item label="发行年份" v-if="date">
         <el-date-picker
           v-model="queryForm.year"
           type="year"
@@ -43,8 +43,8 @@
 import { reactive,  } from 'vue';
 import { Search } from '@element-plus/icons-vue';
 import { themeOptions } from '../../plugins/optionTyping';
-import { it } from 'element-plus/es/locale';
 export default {
+  props: ['kw', 'date', 'theme'],
   setup(props, {emit}){
     const queryForm = reactive({
       key: '',

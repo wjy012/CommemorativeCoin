@@ -21,20 +21,38 @@
 
 <script>
 import { defineComponent, reactive, ref } from "vue";
+import { ElMessage } from "element-plus";
 import { reg } from '../service';
+import { useRouter } from "vue-router";
+
 export default defineComponent({
     name: 'RegForm',
     setup() {
-        const regFormRef = ref()
-        const regForm = reactive({
-          username: '',
-          password: '',
-        })
-        const submitForm = async (form)=>{
-            const res = await reg(form)
-            console.log('res', res);
-        }
-        return { regFormRef, regForm, submitForm}
+      const router = useRouter()
+      const regFormRef = ref()
+      const regForm = reactive({
+        username: '',
+        password: '',
+      })
+      const submitForm = async (form)=>{
+          const res = await reg(form)
+          if(res.code===200){
+            localStorage.setItem('token', 'Bearer '+res.token)
+            ElMessage({
+              message: '注册成功！三秒后自动跳转首页...',
+              type: 'success'
+            })
+            setTimeout(() => {
+              router.push('/dashboard')
+            }, 3000);
+          }else{
+            ElMessage({
+              message: '失败！',
+              type: 'error'
+            })
+          }
+      }
+      return { regFormRef, regForm, submitForm}
     }
     
 })

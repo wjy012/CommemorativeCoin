@@ -1,13 +1,16 @@
 <template>
-    <div>
-        鉴赏文章查询
-    </div>
+    <BreadCrumb />
+    <CommentsTable />
+    
 </template>
 
 <script>
-    export default {
-        
-    }
+import BreadCrumb from '../../components/BreadCrumb/index.vue'
+import CommentsTable from './components/CommentsTable.vue';
+
+export default {
+    components: {BreadCrumb, CommentsTable}
+}
 </script>
 
 <style lang="scss" scoped>

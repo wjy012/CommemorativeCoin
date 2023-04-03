@@ -11,5 +11,7 @@
 </script>
 
 <style lang="scss" scoped>
-
+.el-main{
+    overflow: visible;
+}
 </style>
