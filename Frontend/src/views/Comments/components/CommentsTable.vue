@@ -5,7 +5,14 @@
       :show-header="false"
       :data="tableData"
     >
-
+      <el-table-column prop="title" :min-width="80">
+        <template v-slot:default="scope">
+          <el-link :href="scope.row.link" target="_blank">
+            <KeywordText :keyword="query" :text="scope.row.title" />
+          </el-link>
+        </template>
+      </el-table-column>
+      <el-table-column prop="date" :min-width="20" align="right"/>
     </el-table>
     <div class="pagediv">
       <el-pagination
@@ -24,10 +31,11 @@
 <script>
 import { reactive, ref } from "vue";
 import Query from "../../../components/Query/index.vue";
-import { googleSearch } from "../service";
+import KeywordText from '../../../components/KeywordText/index.jsx'
+import { commentList } from "../service";
 export default {
     name: 'CommentsTable',
-    components: {Query},
+    components: {Query, KeywordText},
     props: {
       dataRequest: Function
     },
@@ -40,19 +48,12 @@ export default {
         pageSize: 10
       })
 
-      const columns = [{
-        prop: 'title',
-      }, {
-        prop: 'date'
-      }]
-
-      const getData = async (pagination, params)=>{
-        const res = await googleSearch(pagination, params)
-        console.log(res);
-        // if(res.code === 200){
-        //   tableData.value = res.data.rows
-        //   count.value = res.data.count
-        // }
+      const getData = async (pagination, {value})=>{
+        const res = await commentList(pagination, value)
+        if(res.code === 200){
+          tableData.value = res.data.rows
+          count.value = res.data.count
+        }
       }
 
       const getQuery = (form) =>{
@@ -69,7 +70,7 @@ export default {
       }
       getData(pagination, query)
 
-      return {pagination, count, tableData, getQuery, handleCurrentChange, handleSizeChange}
+      return {pagination, count, tableData, query, getQuery, handleCurrentChange, handleSizeChange}
     }
 
 }

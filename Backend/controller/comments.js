@@ -1,4 +1,5 @@
 const Comments = require('../model/comments')
+const {Op} = require('sequelize')
 
 /**
  * 查询列表 get
@@ -7,7 +8,9 @@ const getCommentList = async ctx=>{
     const { currentPage, pageSize, kw } = ctx.query
     const criteria = {}
     if(kw){
-        criteria['kw'] = kw
+        criteria['title'] = {
+            [Op.like]: `%${kw}%`
+        }
     }
     await Comments.findAndCountAll({
         where: criteria,
@@ -17,15 +20,16 @@ const getCommentList = async ctx=>{
         if(res){
             ctx.body = {
                 code: 200,
-                date: res
+                data: res
             }
         }else{
             return Promise.reject()
         }
     }).catch(err=>{
+        console.log(err);
         ctx.body = {
             code: 500,
-            date: '查询错误'
+            data: '查询错误'
         }
     })
 }

@@ -26,9 +26,6 @@ import { getCoinList, addCoin } from './service';
 
 export default {
     components: {Query, BreadCrumb, DataTable, AddCoinForm},
-    // props:{
-    //     type: String
-    // },
     setup(){
         const columns = [
             {

@@ -1,15 +1,13 @@
 import API from "../../plugins/axiosInstance";
-const key = 'AIzaSyAupIQVQb6aNXENvKRW1XFfNQsBvbY9fqA';
-const cx ='06c0bbdfd2dc84bf6';
 
-export const googleSearch = async (pagination, kw)=>{
-    const { items } =  await API({
-        url: 'https://www.googleapis.com/customsearch/v1',
+export const commentList = async (pagination, kw)=>{
+    console.log(kw);
+    const params = {
+        ...pagination, kw
+    }
+    return await API({
+        url: '/commentList',
         method: 'get',
-        params: {
-            key, cx, q:'纪念币',
-            num: 10, start: pagination.currentPage
-        }
-    })
-    return items
+        params
+    }) 
 }
