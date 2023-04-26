@@ -1,5 +1,8 @@
 const Coins = require('../model/coins')
+const Comments = require('../model/comments')
 const {Op, fn, col, where} = require('sequelize')
+const { exec } = require('child_process')
+const Mention = require('../model/mention')
 
 /**
  * 查询列表
@@ -61,6 +64,42 @@ const getCoinDetail = async ctx=>{
 }
 
 /**
+ * 查询单个纪念币相关的文章
+ * get
+ * params: currentPage, pageSize, coinID
+ */
+const getMentioned = async ctx =>{
+    const {currentPage, pageSize, coinID} = ctx.query
+    await Mention.findAndCountAll({
+        include: [Comments],
+        where: {
+            coinid: coinID
+        },
+        attributes: {
+            exclude: ['createdAt', 'updatedAt']
+        }
+        // limit: pageSize-0,
+        // offset: pageSize * (currentPage-1)
+    }).then(res=>{
+        if(res){
+            const rows = []
+            res.rows.forEach(item =>{
+                rows.push(item.comment)
+            })
+            ctx.body = {
+                code: 200,
+                data: {
+                    count: res.count,
+                    rows
+                }
+            }
+        }
+    }).catch(err=>{
+        console.log('catcherr', err);
+    })
+}
+
+/**
  * 添加纪念币信息
  * post
  */
@@ -75,15 +114,26 @@ const addCoin = async ctx =>{
         theme,
         date,
         image
-    }).then(res=>{
-        if(res){
+    }).then(coin=>{
+        if(coin){
+            const {id} = coin.dataValues
+            const year = date.split('-')[0]
+            let comments = 0
+            exec(`python ./pycode/google.py ${name} ${id} ${year}`, (err, stdout)=>{
+                if(err){
+                    console.log(err.message);
+                    return
+                }
+                comments = stdout
+            })
             ctx.body={
                 code: 200,
-                msg: '添加成功！'
+                msg: `添加成功！`
             }
         }
         else return Promise.reject()
     }).catch(err=>{
+        console.log(err);
         ctx.body = {
             code: 500,
             msg: '添加失败'
@@ -141,6 +191,7 @@ const uploadCoinImg = async ctx =>{
 module.exports = {
     getCoinList,
     getCoinDetail,
+    getMentioned,
     addCoin,
     deleteCoin,
     updateCoin,

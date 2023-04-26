@@ -31,11 +31,11 @@ const Coins = sequelize.define('coins', {
         comment: '发行时间'
     },
     image: {
-        type: STRING(80),
+        type: STRING(200),
         comment: '图片链接'
     },
     theme: {
-        type: STRING(8),
+        type: STRING(15),
         comment: '题材',
     },
     material: {

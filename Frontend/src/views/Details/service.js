@@ -17,3 +17,13 @@ export const editCoinDetail = async (id, coinInfo)=>{
         }
     })
 }
+
+export const getMentioned = async (pagination, coinID)=>{
+    return await API({
+        url: '/mentionedComments',
+        method: 'get',
+        params: {
+            ...pagination, coinID
+        }
+    })
+}

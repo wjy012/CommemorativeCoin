@@ -40,7 +40,7 @@
         <el-upload 
           action="http://localhost:3000/uploadCoinImg" 
           list-type="picture-card" 
-          :limit="1"
+          :limit="2"
           :on-success="afterUpload"
           :on-remove="handleRemove"
         >
@@ -63,17 +63,15 @@
 import { reactive, ref, watch } from 'vue'
 import { Delete, Plus } from '@element-plus/icons-vue'
 import { typeOptions, themeOptions } from '../../plugins/optionTyping'
-import { addCoin } from '../../views/Coins/service'
-import { ElMessage } from 'element-plus';
 
 export default {
     name: 'AddCoinForm',
     props: {
       type: String,
       dialogVisible: Boolean,
-      // submitForm: Function
     },
     setup(props, {emit}){
+      const imgs = ref([])
       const form = reactive({
         name: '',
         type: props.type,
@@ -89,8 +87,16 @@ export default {
         console.log(newV, oldV);
         dialogOpen.value = newV
       })
-      const handleRemove = () => {
-        form.image = ''
+
+      const handleRemove = (file) => {
+        const { response: {data} } = file
+        console.log(data);
+        for(let i=0; i<imgs.length;i++){
+          if(imgs.value[i] === data){
+            imgs.value.splice(i, 1)
+            break
+          }
+        }
       }
 
       const closeDialog = ()=>{
@@ -98,30 +104,13 @@ export default {
       }
 
       const afterUpload = (res)=>{
-        console.log(res);
-        form.image = res.data
+        imgs.value.push(res.data)
       }
       const submitForm = (form)=>{
+        form.image = imgs.value.join(';')
+        imgs.value = []
         emit('submitForm', form)
       }
-
-      // const handleSubmit = async (form) =>{
-      //   const res = await addCoin(form)
-      //   console.log(res);
-      //   if(res.code===200){
-      //     ElMessage({
-      //       message: '添加成功！',
-      //       type: 'success'
-      //     })
-      //     closeDialog()
-      //   }else{
-      //     Message({
-      //       message: '添加失败！',
-      //       type: 'warning'
-      //     })
-      //   }
-      // }
-      
 
       return { dialogOpen, closeDialog, typeOptions, themeOptions, form, handleRemove, afterUpload, submitForm, Delete, Plus}
     }

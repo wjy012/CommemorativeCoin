@@ -3,7 +3,8 @@
   <el-card>
     <el-row  justify="space-between">
       <el-col :span="6">
-        <el-image :src="coin.image" fit="contain"/>
+        <!-- <el-image :src="coin.image" fit="contain"/> -->
+        <CoinImg :hrefs="coin.image"/>
       </el-col>
       <el-col :span="18"> 
         <el-descriptions
@@ -72,18 +73,28 @@
       </el-col>
     </el-row>
   </el-card>
+  <el-card>
+    <template #header>
+      <div class="card-header">
+        <span>相关文章</span>
+      </div>
+    </template>
+    <CommentsTable :query="false" :dataRequest="getMentioned" :coinID="id"/>
+  </el-card>
 </template>
 
 <script>
 import { useRoute } from 'vue-router';
 import { reactive, ref } from 'vue';
 import BreadCrumb from '../../components/BreadCrumb/index.vue';
-import { getCoinDetail, editCoinDetail } from './service';
+import CommentsTable from '../../components/CommentsTable/index.vue'
+import CoinImg from './components/CoinImg.vue';
+import { getCoinDetail, editCoinDetail, getMentioned } from './service';
 import { typeOptions, typeMap, themeOptions, themeMap } from '../../plugins/optionTyping'; 
 import { ElMessage } from "element-plus";
 
 export default {
-  components: {BreadCrumb},
+  components: {BreadCrumb, CoinImg, CommentsTable},
   setup(){
     const coin = reactive({
       name: '',
@@ -112,7 +123,6 @@ export default {
       const res = await getCoinDetail(coinID)
       if(res.code === 200){
         const {data} = res
-        console.log(data);
         for(const key in coin){
           coin[key] = data[key]
           coinForm[key] = data[key]
@@ -141,7 +151,7 @@ export default {
     
     getData(id)
     
-    return {coin, editing, coinForm, typeOptions, themeOptions, editInfo, cancelEdit, submitForm}
+    return {id, coin, editing, coinForm, typeOptions, themeOptions, editInfo, cancelEdit, submitForm, getMentioned}
   }
 }
 </script>
@@ -165,5 +175,10 @@ export default {
 }
 .el-date-picker{
   width: 70%;
+}
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 </style>

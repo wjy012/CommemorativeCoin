@@ -1,6 +1,7 @@
 const {
     getCoinList,
     getCoinDetail,
+    getMentioned,
     addCoin,
     updateCoin,
     uploadCoinImg
@@ -11,6 +12,8 @@ const upload = require('../db/upload')
 router.get('/coinList', getCoinList)
 
 router.get('/coinDetail', getCoinDetail)
+
+router.get('/mentionedComments', getMentioned)
 
 router.post('/addCoin', addCoin)
 

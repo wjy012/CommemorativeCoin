@@ -1,5 +1,5 @@
 <template>
-  <div style="margin-top: 20px;">
+  <div style="margin-top: 20px;" v-if="kw || date || theme">
     <el-form 
       inline
       :model="queryForm" 

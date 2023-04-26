@@ -12,7 +12,7 @@
         >
         <template v-slot:default="scope">
           <div v-if="item.type==='img'" class="imgbox">
-            <el-image :src="scope.row.image" />
+            <el-image :src="scope.row.image.split(';')[0]" />
           </div>
           <div v-if="item.type==='detail'" >
             <el-button link type="primary" size="small" @click="toDetail(scope.row.id)">
