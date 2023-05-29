@@ -20,7 +20,7 @@ import { reactive } from 'vue';
 import AppAside from './components/AppAside.vue';
 import AppMain from './components/AppMain.vue';
 import { useRouter } from 'vue-router';
-import { verify } from './service';
+import { verify } from '../plugins/verify';
 import { ElMessage } from 'element-plus';
 
 export default {
@@ -50,6 +50,9 @@ export default {
         message: '用户已注销！',
         type: 'success'
       })
+      setTimeout(() => {
+        location.reload()
+      }, 1000);
     }
     return {toLogin, logout, data}
   }        

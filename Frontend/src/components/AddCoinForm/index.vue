@@ -1,11 +1,11 @@
 <template>
-  <el-dialog v-model="dialogOpen" title="添加纪念币/钞">
+  <el-dialog v-model="dialogOpen" title="添加纪念币/钞" width="45%">
     <el-form :ref="form" :model="form" label-width="100px">
       <el-form-item label="名称" required>
-        <el-input v-model="form.name" placeholder="请输入名称"/>
+        <el-input v-model="form.name" placeholder="请输入名称" class="input"/>
       </el-form-item>
       <el-form-item label="类型" required>
-        <el-select v-model="form.type" placeholder="请选择类型">
+        <el-select v-model="form.type" placeholder="请选择类型" class="input">
           <el-option 
             v-for="item in typeOptions"
             :key="item.value"
@@ -15,10 +15,10 @@
         </el-select>
       </el-form-item>
       <el-form-item label="材质" >
-        <el-input v-model="form.material" placeholder="请输入材质"/>
+        <el-input v-model="form.material" placeholder="请输入材质" class="input"/>
       </el-form-item>
       <el-form-item label="题材" required>
-        <el-select v-model="form.theme" placeholder="请选择题材">
+        <el-select v-model="form.theme" placeholder="请选择题材" class="input">
           <el-option 
             v-for="item in themeOptions"
             :key="item.value"
@@ -28,13 +28,16 @@
         </el-select>
       </el-form-item>
       <el-form-item label="面值" required>
-        <el-input v-model="form.value" type="number" placeholder="请输入面值"/>
+        <el-input v-model="form.value" type="number" placeholder="请输入面值" class="input"/>
       </el-form-item>
       <el-form-item label="发行日期" >
-        <el-date-picker v-model="form.date" type="date" placeholder="请选择发行日期"/>
+        <el-date-picker v-model="form.date" type="date" placeholder="请选择发行日期" class="input"/>
       </el-form-item>
       <el-form-item label="发行量" >
-        <el-input v-model="form.amount" type="number" placeholder="请输入发行量"/>
+        <el-input v-model="form.amount" type="number" placeholder="请输入发行量" class="input"/>
+      </el-form-item>
+      <el-form-item label="价格链接" >
+        <el-input v-model="form.pricelink" placeholder="请输入价格链接（非必选，不填则自动寻找，可能不太精确）" class="input"/>
       </el-form-item>
       <el-form-item label="图片" >
         <el-upload 
@@ -80,6 +83,7 @@ export default {
         value: '',
         amount: '',   
         date: '',
+        pricelink: '',
         image: '',
       })
       const dialogOpen = ref(props.dialogVisible)
@@ -118,5 +122,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
+.input {
+  width: 75%;
+}
 </style>

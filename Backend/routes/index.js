@@ -1,14 +1,8 @@
 const router = require('koa-router')()
+const {getIndex, getPopCoins} = require('../controller/index')
 
+router.get('/index', getIndex)
 
-router.get('/string', async (ctx, next) => {
-  ctx.body = 'koa2 string'
-})
-
-router.get('/json', async (ctx, next) => {
-  ctx.body = {
-    title: 'koa2 json'
-  }
-})
+router.get('/popCoins', getPopCoins)
 
 module.exports = router

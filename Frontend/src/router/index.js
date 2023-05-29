@@ -19,7 +19,6 @@ const routes = [
                 path: '/coins/common',
                 name: 'commonCoins',
                 component: ()=> import('../views/Coins/index.vue'),
-                // props: { type: 'common' },
                 meta: {
                     title: '普通纪念币'
                 }
@@ -28,7 +27,6 @@ const routes = [
                 path: '/coins/precious',
                 name: 'preciousCoins',
                 component: ()=> import('../views/Coins/index.vue'),
-                // props: { type: 'precious' },
                 meta: {
                     title: '贵金属纪念币'
                 }
@@ -37,7 +35,6 @@ const routes = [
                 path: '/coins/cash',
                 name: 'cash',
                 component: ()=> import('../views/Coins/index.vue'),
-                // props: { type: 'cash' },
                 meta: {
                     title: '纪念钞'
                 }

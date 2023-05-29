@@ -27,3 +27,13 @@ export const getMentioned = async (pagination, coinID)=>{
         }
     })
 }
+
+export const getPriceData = async (coinID)=>{
+    return await API({
+        url: 'getPriceData',
+        method: 'get',
+        params: {
+            id: coinID
+        }
+    })
+}

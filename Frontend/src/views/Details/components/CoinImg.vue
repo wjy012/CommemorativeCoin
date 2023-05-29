@@ -13,7 +13,6 @@ export default {
         hrefs: String
     },
     setup(props){
-      console.log(props.hrefs.split(';'));
     }
 }
 </script>

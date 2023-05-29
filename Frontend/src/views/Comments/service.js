@@ -1,7 +1,6 @@
 import API from "../../plugins/axiosInstance";
 
 export const commentList = async (pagination, kw)=>{
-    console.log(kw);
     const params = {
         ...pagination, kw
     }
@@ -10,4 +9,11 @@ export const commentList = async (pagination, kw)=>{
         method: 'get',
         params
     }) 
+}
+
+export const refreshComments = async ()=>{
+    return await API({
+        url: '/refreshComments',
+        method: 'get'
+    })
 }

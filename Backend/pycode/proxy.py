@@ -37,29 +37,6 @@ mentionSql = 'insert into mentions (coinid, commentid, createdAt, updatedAt) val
 
 now = str(datetime.datetime.now()).split('.')[0]
 
-# for page in range(4):
-#     driver.get(f'http://www.cgccl.cn/common/unpic-news-list?columnId=2046&searchText=%E8%B5%8F%E6%9E%90&search={{"pageNo":{page+1}}}&searchInput=true')
-#     time.sleep(40)
-#     result = proxy.har
-#
-    # for entry in result['log']['entries']:
-    #     _url = entry['request']['url']
-    #     if "/api/misc/chngc/misc/portal/content/list" in _url:
-    #         _response = entry['response']
-    #         _content = _response['content']['text']
-    #         jsondata = json.loads(_content)
-    #         data = jsondata['data']['result']['data']
-    #         for item in data:
-    #             link = 'http://www.cgccl.cn/common/news-detail?id=' + str(item['id'])
-    #             title = item['title']
-    #             date = datetime.datetime.utcfromtimestamp(item['releaseDate'] / 1000)
-    #             print(title, link, date)
-    #             cursor.execute(
-    #                 'insert into comments (title, link, date, createdAt, updatedAt) values (%s, %s, %s, %s, %s)',
-    #                 (title, link, date, now, now)
-    #             )
-
-
 page = 1
 total = 100
 while True:

@@ -41,6 +41,14 @@ const Coins = sequelize.define('coins', {
     material: {
         type: STRING(10),
         comment: '材质'
+    },
+    visited: {
+        type: INTEGER(7),
+        comment: '访问次数'
+    }, 
+    pricelink: {
+        type: STRING(200),
+        comment: '价格链接'
     }
 })
 

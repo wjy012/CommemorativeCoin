@@ -1,14 +1,6 @@
 <script>
 import API from "./plugins/axiosInstance"
 export default {
-  created(){
-    API({
-      url: '/string',
-      method: 'get',
-    }).then(res =>{
-      console.log(res);
-    })
-  }
 }
 </script>
 

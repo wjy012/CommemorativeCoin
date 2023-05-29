@@ -23,6 +23,7 @@ import AddCoinForm from '../../components/AddCoinForm/index.vue'
 import { useRoute } from 'vue-router';
 import { ElMessage } from 'element-plus';
 import { getCoinList, addCoin } from './service';
+import { verify } from '../../plugins/verify'
 
 export default {
     components: {Query, BreadCrumb, DataTable, AddCoinForm},
@@ -53,7 +54,7 @@ export default {
                 fixed: 'right',
                 type: 'detail',
                 align: 'center',
-                addItem: true,
+                addItem: false,
                 width: '30%'
             }
         ]
@@ -64,6 +65,15 @@ export default {
         })
 
         const data = reactive({})
+
+        const getLogState = async ()=>{
+            const res = await verify()
+                if(res.code === 200){
+                    columns[columns.length-1]['addItem'] = true
+                }
+            }
+        getLogState()
+
         const dialogVisible = ref(false)
         const shouldTableUpdate = ref(false)
         const setDialogVisible = ()=>{
@@ -76,15 +86,15 @@ export default {
             const res = await addCoin(form)
             if(res.code===200){
                 ElMessage({
-                message: '添加成功！',
-                type: 'success'
+                    message: '添加成功！正在收集相关鉴赏文章中...',
+                    type: 'success'
                 })
                 closeDialog()
                 shouldTableUpdate.value = true
             }else{
                 ElMessage({
-                message: '添加失败！',
-                type: 'warning'
+                    message: '添加失败！',
+                    type: 'warning'
                 })
             }
         }

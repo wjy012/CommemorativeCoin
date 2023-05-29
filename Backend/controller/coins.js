@@ -1,8 +1,9 @@
 const Coins = require('../model/coins')
 const Comments = require('../model/comments')
 const {Op, fn, col, where} = require('sequelize')
-const { exec } = require('child_process')
+const { exec, execSync } = require('child_process')
 const Mention = require('../model/mention')
+const Price = require('../model/price')
 
 /**
  * 查询列表
@@ -30,7 +31,8 @@ const getCoinList = async ctx =>{
             ]
         },
         limit: pageSize-0,
-        offset: pageSize * (currentPage-1)
+        offset: pageSize * (currentPage-1),
+        order: [['date', 'DESC']]
     }).then(res=>{
         if(res){
             ctx.body = {
@@ -47,20 +49,56 @@ const getCoinList = async ctx =>{
  */
 const getCoinDetail = async ctx=>{
     const {id} = ctx.query
-    await Coins.findByPk(id).then(res=>{
-        if(res){
-            ctx.body = {
-                code: 200,
-                data: res
+    try {
+        const coin = await Coins.findByPk(id)
+        if(!coin){
+            throw new Error('该纪念币不存在或已被删除！')
+        }
+        coin.visited ++
+        await coin.save()
+        ctx.body = {
+            code: 200,
+            data: {
+                coin
             }
         }
-        else{
-            ctx.body = {
-                code: 404,
-                msg: '该纪念币不存在或已被删除！'
+    } catch (error) {
+        ctx.body = {
+            code: 404,
+            msg: '该纪念币不存在或已被删除！'
+        }
+    }
+}
+
+/**
+ * 查询单个纪念币价格信息
+ */
+const getPriceData = async ctx =>{
+    const {id} = ctx.query
+    try{
+        const data = await Price.findAll({
+            where: {id},
+            attributes: {
+                exclude: ['id', 'createdAt', 'updatedAt']
+            }
+        })
+        const date = [], price = []
+        data.forEach(e=>{
+            date.push(e.date)
+            price.push(e.price)
+        })
+        ctx.body = {
+            code: 200,
+            data: {
+                date, price
             }
         }
-    })
+    } catch(e) {
+        ctx.body = {
+            code: 404,
+            msg: '该纪念币不存在或已被删除！'
+        }
+    }
 }
 
 /**
@@ -104,7 +142,10 @@ const getMentioned = async ctx =>{
  * post
  */
 const addCoin = async ctx =>{
-    const {name, type, value, amount, material, theme, date, image } = ctx.request.body
+    let {name, type, value, amount, material, theme, date, image, pricelink } = ctx.request.body
+    if(!pricelink)
+        pricelink = execSync(`python ./pycode/pricelink.py ${name}`).toString()
+    
     await Coins.create({
         name,
         type,
@@ -113,12 +154,15 @@ const addCoin = async ctx =>{
         material,
         theme,
         date,
-        image
-    }).then(coin=>{
+        image,
+        visited: 0,
+        pricelink
+    }).then(async coin=>{
         if(coin){
             const {id} = coin.dataValues
             const year = date.split('-')[0]
             let comments = 0
+            name = name.replace(/\d+[g克]/, '')
             exec(`python ./pycode/google.py ${name} ${id} ${year}`, (err, stdout)=>{
                 if(err){
                     console.log(err.message);
@@ -126,6 +170,7 @@ const addCoin = async ctx =>{
                 }
                 comments = stdout
             })
+            exec(`python ./pycode/priceSpider.py ${id} ${pricelink}`)
             ctx.body={
                 code: 200,
                 msg: `添加成功！`
@@ -191,6 +236,7 @@ const uploadCoinImg = async ctx =>{
 module.exports = {
     getCoinList,
     getCoinDetail,
+    getPriceData,
     getMentioned,
     addCoin,
     deleteCoin,

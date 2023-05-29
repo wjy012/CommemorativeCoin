@@ -1,6 +1,10 @@
 <template>
   <div>
-    <Query @getQuery="getQuery" kw="1"/>
+    <Query @getQuery="getQuery" kw="1">
+      <template #refresh v-if="isLogged">
+        <el-button type="primary" :icon="Refresh" :loading="loading" round @click="handleRefresh()">刷新</el-button>
+      </template>
+    </Query>
     <el-table 
       :show-header="false"
       :data="tableData"
@@ -30,9 +34,12 @@
 
 <script>
 import { reactive, ref } from "vue";
+import {Refresh} from '@element-plus/icons-vue'
+import { ElMessage } from 'element-plus';
 import Query from "../../../components/Query/index.vue";
 import KeywordText from '../../../components/KeywordText/index.jsx'
-import { commentList } from "../service";
+import { commentList, refreshComments } from "../service";
+import { verify } from "../../../plugins/verify";
 export default {
     name: 'CommentsTable',
     components: {Query, KeywordText},
@@ -47,6 +54,15 @@ export default {
         currentPage: 1,
         pageSize: 10
       })
+
+      const isLogged = ref(false)
+      const getLogState = async ()=>{
+        const res = await verify()
+        if(res.code === 200){
+          isLogged.value = true
+        }
+      }
+      getLogState()
 
       const getData = async (pagination, {value})=>{
         const res = await commentList(pagination, value)
@@ -70,7 +86,22 @@ export default {
       }
       getData(pagination, query)
 
-      return {pagination, count, tableData, query, getQuery, handleCurrentChange, handleSizeChange}
+      const loading = ref(false)
+      const handleRefresh = async ()=>{
+        loading.value = true
+        const res = await refreshComments()
+        console.log('res', res);
+        if(res.code === 200){
+          ElMessage({
+            message: `更新成功！收集到${res.lines}条鉴赏文章！`,
+            type: 'success'
+          })
+        }
+        loading.value = false
+        getData(pagination, query)
+      }
+
+      return {pagination, count, tableData, query, isLogged, loading, Refresh, getQuery, handleCurrentChange, handleSizeChange, handleRefresh}
     }
 
 }

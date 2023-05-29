@@ -1,5 +1,5 @@
 <template>
-  <div style="margin-top: 20px;" v-if="kw || date || theme">
+  <div class="query" v-if="kw || date || theme">
     <el-form 
       inline
       :model="queryForm" 
@@ -36,6 +36,7 @@
         <el-button type="primary" plain @click="resetForm()">重置</el-button>
       </el-form-item>
     </el-form>
+    <slot name="refresh" />
   </div>
 </template>
   
@@ -70,3 +71,11 @@ export default {
 }
 
 </script>
+
+<style scoped>
+.query {
+  margin-top: 20px;
+  display: flex;
+  justify-content: space-between;
+}
+</style>

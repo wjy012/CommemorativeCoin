@@ -1,5 +1,6 @@
 const Comments = require('../model/comments')
 const {Op} = require('sequelize')
+const { exec, execSync } = require('child_process')
 
 /**
  * 查询列表 get
@@ -15,7 +16,8 @@ const getCommentList = async ctx=>{
     await Comments.findAndCountAll({
         where: criteria,
         offset: pageSize * (currentPage-1),
-        limit: pageSize-0
+        limit: pageSize-0,
+        order: [['date', 'DESC']]
     }).then(res=>{
         if(res){
             ctx.body = {
@@ -34,6 +36,25 @@ const getCommentList = async ctx=>{
     })
 }
 
+/**
+ * 手动启动文章爬虫
+ */
+const refreshComments = async ctx =>{
+    try {
+        const lines = await execSync('python ./pycode/comments.py').toString()
+        ctx.body = {
+            code: 200,
+            lines
+        }
+    } catch (error) {
+        ctx.body = {
+            code: 500
+        }
+    }
+}
+
+
 module.exports = {
-    getCommentList
+    getCommentList,
+    refreshComments
 }

@@ -52,14 +52,12 @@ export default {
   align-items: center;
   background-color: lightblue;
   .box-card {
-    width: 400px;
-    // position: relative;
+    width: 25%;
     margin: 0 auto;
     overflow: hidden;
   }
   .form-area{
-    // padding: 30px 50px;
-    width: 70%;
+    width: 80%;
     margin: auto;
   }
   .title-container {
